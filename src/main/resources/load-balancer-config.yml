@@ -1,0 +1,12 @@
+config:
+  loadBalancerType: ROUND_ROBIN
+  maxLimit : 10
+  provider:
+    - id: 1
+      name: Provider 1
+      methodName: get
+      maxParallelConnection : 10
+    - id: 2
+      name: Provider 2
+      methodName: get
+      maxParallelConnection : 10
