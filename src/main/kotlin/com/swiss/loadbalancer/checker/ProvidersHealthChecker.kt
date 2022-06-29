@@ -3,11 +3,14 @@ package com.swiss.loadbalancer.checker
 import com.swiss.bridge.ProviderBridge
 import com.swiss.bridge.ProviderData
 import com.swiss.route.Router
+import mu.KotlinLogging
 import java.util.concurrent.locks.ReentrantLock
 
 class ProvidersHealthChecker(private val router : Router) {
 
     private val lock: ReentrantLock = ReentrantLock()
+    private val logger = KotlinLogging.logger {}
+
     fun removeUnHealthyProvider() {
         lock.lock()
         try {
@@ -18,7 +21,7 @@ class ProvidersHealthChecker(private val router : Router) {
                 }
             }
         } catch (e : Exception) {
-
+            logger.error("#ProvidersHealthChecker# removeUnHealthyProvider ", e)
         }finally {
             lock.unlock()
         }
@@ -44,7 +47,7 @@ class ProvidersHealthChecker(private val router : Router) {
                 ProviderBridge.unHealthyProviders.remove(it)
             }
         } catch (e : Exception) {
-
+            logger.error("#ProvidersHealthChecker# addUnHealthyProviderIfBecomesAvailable ", e)
         }finally {
             lock.unlock()
         }
